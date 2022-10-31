@@ -1,0 +1,10 @@
+
+/aws/
+awscliv2.zip
+pipeline
+terraform.tfstate
+Untitled-1.tf 
+terraform.tfstate.backup
+.terraform.lock.hcl
+.terraform/
+
