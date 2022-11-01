@@ -16,17 +16,11 @@ resource "aws_ssm_parameter" "cw_agent" {
 }
 
 
-  # tags = {
-  #   Name = "demo_instance"
-  # }
-
-
 locals {
-  userdata = templatefile("userdata.sh", {
+  userdata = templatefile("user_data.sh", {
     ssm_cloudwatch_config = aws_ssm_parameter.cw_agent.name
   })
 }
-
 
 
 
