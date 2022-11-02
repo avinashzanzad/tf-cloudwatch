@@ -1,5 +1,5 @@
 
-data "aws_instance" "foo" {
+data "aws_instance" "instance_id" {
   instance_id = var.instance_id
 
 }
