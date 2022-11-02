@@ -1,0 +1,18 @@
+# ***After terrafrom import ins 
+# In main.tf check values and change values
+# ami = ""
+# tags = "" 
+
+#**** In variable.tf check values and change values
+ default     = "put-ins-id" 
+
+#**** In cloudwatch.tf check values and change values
+check naming conventions of resources and change accordingly
+
+
+#**** In instance_profile.tf check values and change values
+check naming conventions of resources and change accordingly
+
+#**** In provider.tf check values and change values
+setup aws profile for aws provider refer docs
+

@@ -12,7 +12,7 @@ resource "aws_cloudwatch_dashboard" "EC2_Dashboard" {
             "type": "metric",
             "properties": {
                 "metrics": [
-                    [ "AWS/EC2", "CPUUtilization", "InstanceId", "i-0ce4c10b5dacc57a8" ]
+                    [ "AWS/EC2", "CPUUtilization", "InstanceId", "${var.instance_id}" ]
                 ],
                 "view": "singleValue",
                 "stacked": false,
@@ -29,7 +29,7 @@ resource "aws_cloudwatch_dashboard" "EC2_Dashboard" {
             "type": "metric",
             "properties": {
                 "metrics": [
-                    [ "CWAgent", "disk_used_percent", "InstanceId", "i-0ce4c10b5dacc57a8" ]
+                    [ "CWAgent", "disk_used_percent", "InstanceId", "${var.instance_id}"]
                 ],
                 "view": "singleValue",
                 "stacked": false,
@@ -46,7 +46,7 @@ resource "aws_cloudwatch_dashboard" "EC2_Dashboard" {
             "type": "metric",
             "properties": {
                 "metrics": [
-                    [ "CWAgent", "mem_used_percent", "InstanceId", "i-0ce4c10b5dacc57a8" ]
+                    [ "CWAgent", "mem_used_percent", "InstanceId", "${var.instance_id}"]
                 ],
                 "view": "singleValue",
                 "stacked": false,
@@ -62,7 +62,7 @@ EOF
 }
 
   resource "aws_cloudwatch_metric_alarm" "cld" {
-  alarm_name                = "cpu_demo"
+  alarm_name                = "cpu-utilization-alarm"
   comparison_operator       = "GreaterThanOrEqualToThreshold"
   evaluation_periods        = "2"
   #threshold_metric_id       = "e1"
@@ -72,9 +72,56 @@ EOF
   statistic                 = "Average"
   threshold                 = "80"
   alarm_description         = "This metric monitors ec2 cpu utilization"
-  insufficient_data_actions = []
+  insufficient_data_actions = [ "${aws_sns_topic.EC2_topic.arn}" ]
+  alarm_actions             = [ "${aws_sns_topic.EC2_topic.arn}" ] 
+  
+  dimensions = {
+  InstanceId = "${var.instance_id}"
+ 
+  }
+}
+
+resource "aws_cloudwatch_metric_alarm" "memory" {
+  alarm_name                = "memory-utilization-alarm"
+  comparison_operator       = "GreaterThanOrEqualToThreshold"
+  evaluation_periods        = "2"
+  metric_name               = "mem_used_percent"
+  namespace                 = "CWAgent"
+  period                    = "60"
+  statistic                 = "Average"
+  threshold                 = "80"
+  alarm_description         = "This metric monitors ec2 memory utilization"
+  insufficient_data_actions = [ "${aws_sns_topic.EC2_topic.arn}" ]
+  alarm_actions             = [ "${aws_sns_topic.EC2_topic.arn}" ]
+
+  dimensions = {
+  InstanceId = "${var.instance_id}"
+ 
+  }
 
 }
+
+
+resource "aws_cloudwatch_metric_alarm" "disk" {
+  alarm_name                = "disk-utilization-alarm"
+  comparison_operator       = "GreaterThanOrEqualToThreshold"
+  evaluation_periods        = "2"
+  metric_name               = "disk_used_percent"
+  namespace                 = "CWAgent"
+  period                    = "60"
+  statistic                 = "Average"
+  threshold                 = "80"
+  alarm_description         = "This metric monitors ec2 disk utilization"
+  insufficient_data_actions = [ "${aws_sns_topic.EC2_topic.arn}" ]
+  alarm_actions             = [ "${aws_sns_topic.EC2_topic.arn}" ]
+
+  dimensions = {
+  InstanceId = "${var.instance_id}"
+ 
+  }
+
+}
+
 
 resource "aws_sns_topic" "EC2_topic" {
   name = "Demo-server"
@@ -89,6 +136,7 @@ resource "aws_sns_topic_subscription" "EC2_Subscription" {
     aws_sns_topic.EC2_topic
   ]
 }
+
 
 /* metrics alarm for memory and disk usage*/
 
