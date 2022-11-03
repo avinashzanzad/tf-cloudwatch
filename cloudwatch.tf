@@ -16,7 +16,7 @@ resource "aws_cloudwatch_dashboard" "EC2_Dashboard" {
                 ],
                 "view": "singleValue",
                 "stacked": false,
-                "region": "us-east-2",
+                "region": "${var.current_region}",
                 "period": 60,
                 "stat": "Average"
             }
@@ -33,7 +33,7 @@ resource "aws_cloudwatch_dashboard" "EC2_Dashboard" {
                 ],
                 "view": "singleValue",
                 "stacked": false,
-                "region": "us-east-2",
+                "region": "${var.current_region}",
                 "period": 60,
                 "stat": "Average"
             }
@@ -50,7 +50,7 @@ resource "aws_cloudwatch_dashboard" "EC2_Dashboard" {
                 ],
                 "view": "singleValue",
                 "stacked": false,
-                "region": "us-east-2",
+                "region": "${var.current_region}",
                 "period": 60,
                 "stat": "Average"
             }

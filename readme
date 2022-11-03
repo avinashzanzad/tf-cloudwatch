@@ -1,7 +1,8 @@
 # ***After terrafrom import ins 
 # In main.tf check values and change values
-# ami = ""
-# tags = "" 
+ ami = ""
+ tags = "" 
+ instance_type = ""
 
 #**** In variable.tf check values and change values
  default     = "put-ins-id" 

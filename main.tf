@@ -5,7 +5,7 @@ data "aws_instance" "instance_id" {
 }
 
 resource "aws_instance" "this" {
-  ami           = "ami-097a2df4ac947655f"
+  ami           = "ami-089a545a9ed9893b6"
   instance_type = "t2.micro" 
   iam_instance_profile = aws_iam_instance_profile.this.name
   user_data            = local.userdata
@@ -18,6 +18,8 @@ resource "aws_ssm_parameter" "cw_agent" {
   name        = "/cloudwatch-agent/config"
   type        = "String"
   value       = file("cw_agent_config.json")
+  overwrite   = true
+
 }
 
 
