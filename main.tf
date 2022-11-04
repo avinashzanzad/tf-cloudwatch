@@ -5,11 +5,11 @@ data "aws_instance" "instance_id" {
 }
 
 resource "aws_instance" "this" {
-  ami           = "ami-089a545a9ed9893b6"
+  ami           = "ami-097a2df4ac947655f"
   instance_type = "t2.micro" 
   iam_instance_profile = aws_iam_instance_profile.this.name
   user_data            = local.userdata
-  tags                 = { Name = "gmt-server" }
+  tags                 = { Name = "gmt-server2" }
 }
 
 
