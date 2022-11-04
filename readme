@@ -15,5 +15,8 @@ check naming conventions of resources and change accordingly
 check naming conventions of resources and change accordingly
 
 #**** In provider.tf check values and change values
-setup aws profile for aws provider refer docs
+setup aws profile for aws provider refer docs  
+
+##*** if you want to apply cloudwatch monitoring on amazon linux ami then 
+go to shell script for amazon ami -> file  use that code in user_data.sh
 
